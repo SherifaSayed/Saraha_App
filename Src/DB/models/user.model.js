@@ -42,6 +42,9 @@ const userSchema = new mongoose.Schema({
         enum:Object.values(STATUS),
         default:STATUS.ACTIVE
     },
+    phoneNumber:{
+        type:String,
+    },
     createdAt:{
         type:Date,
     
@@ -52,12 +55,13 @@ const userSchema = new mongoose.Schema({
     }
 },{
     toJSON:{virtuals:true,getters:true},
-    toObject:{getters:true}
+    toObject:{getters:true},
+    timestamps:true
 
 })
 userSchema.virtual('fullName').get(function(){
     return this.firstName +' '+ this.lastName
 })
 // safty check for model
- const User=mongoose.model.User|| mongoose.model('User',userSchema)
+ const User= mongoose.models.User|| mongoose.model('User',userSchema)
  export default User;

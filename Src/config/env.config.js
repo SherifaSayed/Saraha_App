@@ -11,7 +11,8 @@ app:{
     MONGO_URL:process.env.MONGO_URL
   },
   encription:{
-    ENCRIPTION_KEY:process.env.ENC_KEY??'default-encription-key'
+    ENCRIPTION_KEY:process.env.ENC_KEY??'default-encription-key',
+    IV_LENGTH:process.env.ENC_IV_LENGTH ??16
   }
 };
 

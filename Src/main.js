@@ -5,13 +5,15 @@ import envConfig from './config/env.config.js';
 import dbConnection from './DB/models/db.connection.js'; 
 import globalErrorHandler from "./middlewares/globelErrorHandler.js"
 import * as controllers from './modules/index.js'
+import { encrypt } from './Utils/encryption.utils.js';
  const app= express();
  const port= envConfig.app.PORT ;
  app.use(express.json())
  //DataBase Connection 
  dbConnection()
 //Controllers
-
+const encryptData= encrypt("hi");
+console.log(encryptData)
 app.use('/auth',controllers.authController);
 app.use('/user', controllers.userController);
 app.use('/message',controllers.messageController);
