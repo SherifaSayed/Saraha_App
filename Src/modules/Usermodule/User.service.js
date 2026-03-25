@@ -1,4 +1,4 @@
-import { decrypt } from '../../Utils/encryption.utils.js'
+import { decrypt } from '../../Common/Security/encryption.js'
 import User from '../../DB/models/user.model.js'
 
 export const getProfileService = async (id)=>{

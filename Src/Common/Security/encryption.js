@@ -1,5 +1,5 @@
 import crypto, { privateDecrypt, publicEncrypt } from "node:crypto"
-import envConfig from '../config/env.config.js'
+import envConfig from '../../config/env.config.js'
 import fs from'node:fs'
 import { buffer } from "node:stream/consumers";
 const encryptionENV= envConfig.encription;

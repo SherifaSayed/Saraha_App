@@ -1,6 +1,6 @@
 import { User } from "../../DB/Models/index.js";
-import { encrypt } from "../../Utils/encryption.utils.js";
-
+import { encrypt } from "../../Common/Security/encryption.js";
+import { compare, hash } from "../../Common/index.js";
  export const registerService= async(body)=>{
 
     const {firstName, lastName, email, password, gender, phoneNumber}= body;
@@ -10,11 +10,27 @@ import { encrypt } from "../../Utils/encryption.utils.js";
     {
         throw new Error("email duplicat error",{cause:{status:409}})
     }
-    const userObject={firstName,lastName,email,password,gender};
+     const hashedPassword= await hash(password,12); 
+    const userObject={firstName,lastName,email,password:hashedPassword,gender};
     if(phoneNumber)
     {
         userObject.phoneNumber=encrypt(phoneNumber)
     }
     return User.create(userObject);
+
+ }
+ export const loginService = async(body)=>{
+
+const {email, password}= body;
+const user= await User.findOne({email});
+if(!user)
+{
+    throw new Error("Invalid email or password",{cause:{status:401}})
+
+}
+ const isPasswordVaild= await compare(password, user.password)
+ if(!isPasswordVaild)
+    throw new Error("Inavlid email or password",{cause:{status:401}});
+    return user;
 
  }

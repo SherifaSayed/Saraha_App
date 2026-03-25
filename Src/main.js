@@ -5,7 +5,7 @@ import envConfig from './config/env.config.js';
 import dbConnection from './DB/models/db.connection.js'; 
 import globalErrorHandler from "./middlewares/globelErrorHandler.js"
 import * as controllers from './modules/index.js'
-import { encrypt } from './Utils/encryption.utils.js';
+import { encrypt } from './Common/Security/encryption.js';
  const app= express();
  const port= envConfig.app.PORT ;
  app.use(express.json())
