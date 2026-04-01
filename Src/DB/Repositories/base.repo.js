@@ -42,8 +42,10 @@ export class BaseRepository
   {
    return this.model.deleteMany({_id:{$in:ids}})
   }
-
-
-
+ softDeleteMultipleDocumentsById(ids)
+ {
+ return this.model.updateMany({_id:{$in:ids}, isDeleted:false},
+  {$set:{isDeleted:true}, deletedAt:new Date()});
+ }
 }
 
