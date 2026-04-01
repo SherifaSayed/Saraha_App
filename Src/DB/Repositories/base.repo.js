@@ -26,13 +26,21 @@ export class BaseRepository
     
     return this.model.findOneAndUpdate({_id:id},data,{new:true,runValidators: true })
   }
-  deletDocumentById()
+  hardDeleteDocumentById()
   {
 
+   return this.model.findeOneAndDelete({_id:id})
   }
-  deletMultipleDocumentes()
-  {
 
+  softDeleteDocumentById(id)
+  {
+    return this.model.findOneAndUpdate({_id:id, isDeleted:false},
+      {$set:{isDeleted:true, deletedAt:new Date()}}
+      ,{new:true});
+  }
+  hardDeleteMultipleDocumentes(ids)
+  {
+   return this.model.deleteMany({_id:{$in:ids}})
   }
 
 
