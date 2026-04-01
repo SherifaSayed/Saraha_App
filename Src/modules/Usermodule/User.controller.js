@@ -9,5 +9,9 @@ res.json(data);
 
 })
 
+userController.patch('/update/:id', async(req ,res)=>{
 
+const user=await userServer.updateProfileService(req.params, req.body);
+ res.status(201).json({userData:user});
+})
 export default userController;

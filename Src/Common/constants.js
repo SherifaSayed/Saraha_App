@@ -7,7 +7,7 @@ export const User_Roles={
 export const GENDER ={
 
     MALE:'male',
-    FEMALE:'femail'
+    FEMALE:'female'
 };
 export const STATUS={
     ACTIVE:'active',

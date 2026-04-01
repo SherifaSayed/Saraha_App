@@ -7,4 +7,4 @@
 
  export const compare=(plainText, hashText)=>{
     return argon2.verify(hashText,plainText);
- }
+ } 

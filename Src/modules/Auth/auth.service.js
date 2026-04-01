@@ -1,11 +1,13 @@
-import { User } from "../../DB/Models/index.js";
+import { User } from "../../DB/models/index.js";
 import { encrypt } from "../../Common/Security/encryption.js";
 import { compare, hash } from "../../Common/index.js";
+import UserRepository  from "../../DB/Repositories/user.repo.js";
  export const registerService= async(body)=>{
 
     const {firstName, lastName, email, password, gender, phoneNumber}= body;
 
-    const checkEmailDuplicate = await User.findOne({email}).select("email");
+    const checkEmailDuplicate = await UserRepository.findOneDocument({email},{email:1});
+    console.log(checkEmailDuplicate);
     if(checkEmailDuplicate)
     {
         throw new Error("email duplicat error",{cause:{status:409}})
@@ -16,7 +18,7 @@ import { compare, hash } from "../../Common/index.js";
     {
         userObject.phoneNumber=encrypt(phoneNumber)
     }
-    return User.create(userObject);
+   return UserRepository.creatDocument(userObject);
 
  }
  export const loginService = async(body)=>{
