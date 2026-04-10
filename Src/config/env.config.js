@@ -13,6 +13,10 @@ app:{
   encription:{
     ENCRIPTION_KEY:process.env.ENC_KEY??'default-encription-key',
     IV_LENGTH:process.env.ENC_IV_LENGTH ??16
+  },
+  jwt:{
+    accessSignature:process.env.JWT_ACCESS_SECRET,
+    tokenExpiresIn:process.env.EXPIRESIN
   }
 };
 

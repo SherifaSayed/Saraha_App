@@ -2,10 +2,16 @@ import { decrypt } from '../../Common/Security/encryption.js'
 import User from '../../DB/models/user.model.js'
 import {UserRepository} from '../../DB/Repositories/index.js'
 import { Types } from 'mongoose'
-
-export const getProfileService = async (id)=>{
+import envConfig from '../../config/env.config.js'
+import jwt from "jsonwebtoken"
+export const getProfileService = async (req)=>{
  
-    const user = await User.findById(id);
+
+  const accessToken= req.headers.authorization
+ const decodedData= jwt.verify(accessToken,envConfig.jwt.accessSignature )
+ 
+ console.log(decodedData);
+    const user = await User.findById(user_id);
     
     if(user.phoneNumber)
     {
@@ -26,3 +32,9 @@ export const updateProfileService=(id,body)=>{
   return  UserRepository.updateDocumentById(objectId, data);
 
 }
+export const deletUserAcountSoft= (id)=>{
+  const _id= new Types.ObjectId(id)
+ const userData=UserRepository.softDeleteDocumentById(_id);
+ return userData;
+}
+

@@ -20,7 +20,11 @@ export class BaseRepository
 
    return this.model.findById(id)
   }
+findDocument(filters, select={})
+{
 
+  return this.model.find(filters).select(select);
+}
   updateDocumentById(id,data)
   {
     

@@ -12,6 +12,6 @@ authController.get("/",(req, res, next)=>{
  authController.post('/login',async(req, res, next)=>{
 
    const result = await authService.loginService(req.body);
-   res.status(200).json({message:"User logged in successfully", data:result});
+   res.status(200).json({message:"User logged in successfully", token:result});
  })
 export default authController;

@@ -8,7 +8,7 @@ class MessageRepository extends BaseRepository
  {
     super(Message);
  }
-
+  
 
 }
 
