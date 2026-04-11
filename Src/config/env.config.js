@@ -15,8 +15,15 @@ app:{
     IV_LENGTH:process.env.ENC_IV_LENGTH ??16
   },
   jwt:{
-    accessSignature:process.env.JWT_ACCESS_SECRET,
-    tokenExpiresIn:process.env.EXPIRESIN
+    user:{
+    accessSignatureUser:process.env.JWT_ACCESS_SECRET_USER,
+    tokenExpiresIn:process.env.EXPIRESINUSER
+    },
+    admin:
+    {
+      accessSignatureAdmin:process.env.JWT_ACCESS_SECRET_ADMIN,
+    tokenExpiresIn:process.env.EXPIRESINADMIN
+    }
   }
 };
 
