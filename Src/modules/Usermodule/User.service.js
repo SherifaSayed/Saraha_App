@@ -1,28 +1,18 @@
 import {UserRepository} from '../../DB/Repositories/index.js'
 import { Types } from 'mongoose'
-import envConfig from '../../config/env.config.js'
 import * as securityIndex from '../../Common/index.js'
 
-const decodedUserToken=async({token , role})=>{
-  const secretKey=securityIndex.detectSignatureByrole(role)
-const decodedData=securityIndex.verifyToken({token,secretKey})
- const {user_id}=decodedData; 
- return UserRepository.findDocumentById(user_id);
-  
-}
 
-export const getProfileService = async (headers)=>{
-    const accessToken= headers.authorization
-    const role= securityIndex.decodeToken(accessToken);
-    const user = await decodedUserToken({token:accessToken,role})
-    if(!user)
-      throw new Error('user not found', {cause:{status:400}})
+
+export const getProfileService = async (user)=>{
     if(user.phoneNumber)
     {
         user.phoneNumber=securityIndex.decrypt(user.phoneNumber)
     }
    return user ;
 }
+   
+
 export const updateProfileService=(id,body)=>{
   const allowedFields =["firstName", "lastName", "phoneNumber", "password"];
   const objectId = new Types.ObjectId(id);

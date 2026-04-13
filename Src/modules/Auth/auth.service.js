@@ -5,7 +5,7 @@ import * as securityIndex from '../../Common/index.js'
 import User from "../../DB/models/user.model.js";
 
 
-const jwt_Secret_User = envConfig.jwt;
+const jwt_Secret = envConfig.jwt;
 export const registerService = async (body) => {
 
   const { firstName, lastName, email, password, gender, phoneNumber, role } = body;
@@ -38,20 +38,12 @@ export const loginService = async (body) => {
     throw new Error("Inavlid email or password", { cause: { status: 401 } });
 
   //Generate user token access token ;
-    const signature=securityIndex.detectSignatureByrole(user.role)
-   const userRole= user.role;
-   let expires;
-   if(userRole==securityIndex.User_Roles.ADMIN)
-      expires=jwt_Secret_User.admin.tokenExpiresIn
-    else 
-      expires=jwt_Secret_User.user.tokenExpiresIn
-
   const { accessToken } =securityIndex.createLoginCredentials({
     payload: { sup: user.firstName, user_id: user._id, role: user.role },
     
-    signature: signature,
+    signature: jwt_Secret.user.accessSignature,
     options: {
-      expiresIn: expires /* 1d*/,
+      expiresIn: jwt_Secret.user.tokenExpiresIn /* 1d*/,
       issuer: "http://localhost:3000"
     }
   })

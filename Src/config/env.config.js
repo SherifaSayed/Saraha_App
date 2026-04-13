@@ -16,13 +16,19 @@ app:{
   },
   jwt:{
     user:{
-    accessSignatureUser:process.env.JWT_ACCESS_SECRET_USER,
-    tokenExpiresIn:process.env.EXPIRESINUSER
+      refreshSignature:process.env.JWT_REFRESH_SECRET_USER,
+      refreshExpiration:process.env.JWT_REFRESH_EXP_USER,
+      
+      accessSignature:process.env.JWT_ACCESS_SECRET_USER,
+      tokenExpiresIn:process.env.EXPIRESINUSER
     },
     admin:
     {
-      accessSignatureAdmin:process.env.JWT_ACCESS_SECRET_ADMIN,
-    tokenExpiresIn:process.env.EXPIRESINADMIN
+      refreshSignature:process.env.JWT_REFRESH_SECRET_ADMIN,
+      refreshExpiration:process.env.JWT_REFRESH_EXP_ADMIN,
+      
+      accessSignature:process.env.JWT_ACCESS_SECRET_ADMIN,
+      tokenExpiresIn:process.env.EXPIRESINADMIN
     }
   }
 };

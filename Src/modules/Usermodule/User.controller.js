@@ -1,10 +1,11 @@
 import { Router } from "express";
 import * as userServer from './User.service.js'
+import { authenticate } from "../../middlewares/index.js";
 const userController =Router();
 
-userController.get('/profile',async(req, res, next)=>{
+userController.get('/profile',authenticate,async(req, res, next)=>{
 
-const data= await userServer.getProfileService(req.headers);
+const data= await userServer.getProfileService(req.user);
 res.json(data);
 
 })
