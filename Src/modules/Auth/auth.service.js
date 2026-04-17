@@ -38,14 +38,38 @@ export const loginService = async (body) => {
     throw new Error("Inavlid email or password", { cause: { status: 401 } });
 
   //Generate user token access token ;
-  const { accessToken } =securityIndex.createLoginCredentials({
+  const { accessToken ,refreshToken} =securityIndex.createLoginCredentials({
     payload: { sup: user.firstName, user_id: user._id, role: user.role },
-    
-    signature: jwt_Secret.user.accessSignature,
     options: {
-      expiresIn: jwt_Secret.user.tokenExpiresIn /* 1d*/,
-      issuer: "http://localhost:3000"
+      access:{
+
+        expiresIn:jwt_Secret[user.role].tokenExpiresIn,
+        issuer: "http://localhost:3000"
+      },
+      refresh:{
+         expiresIn:jwt_Secret[user.role].refreshExpiration,
+        issuer: "http://localhost:3000"
+      }
+     
     }
   })
-  return accessToken;
+  return {accessToken,refreshToken};
+}
+
+export const refreshTokenService=async(header)=>{
+
+const {authorization:refreshToken}= header;
+ const {decodeData}= await securityIndex.decodeToken({token:refreshToken}, securityIndex.TOKEN_TYPES.REFRESH)
+  const { accessToken} =securityIndex.createLoginCredentials({
+    payload: { sup:decodeData.firstName, user_id: decodeData.user_id, role: decodeData.role },
+    options: {
+      access:{
+
+        expiresIn:jwt_Secret[decodeData.role].tokenExpiresIn,
+        issuer: "http://localhost:3000"
+      }
+    },
+    requiredToken:securityIndex.TOKEN_TYPES.ACCESS
+  })
+   return {accessToken};
 }

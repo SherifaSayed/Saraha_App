@@ -14,4 +14,11 @@ authController.get("/",(req, res, next)=>{
    const result = await authService.loginService(req.body);
    res.status(200).json({message:"User logged in successfully", token:result});
  })
+
+ authController.post('/refresh-token', async(req, res, next)=>{
+   const result =  await authService.refreshTokenService(req.headers);
+   res.status(200).json(result);
+
+
+  })
 export default authController;

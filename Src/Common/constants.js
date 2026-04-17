@@ -13,3 +13,7 @@ export const STATUS={
     ACTIVE:'active',
     INACTIVE:'inactive'
 }
+export const TOKEN_TYPES={
+    ACCESS:'access',
+    REFRESH:'refresh'
+}

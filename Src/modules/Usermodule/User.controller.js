@@ -1,6 +1,6 @@
 import { Router } from "express";
 import * as userServer from './User.service.js'
-import { authenticate } from "../../middlewares/index.js";
+import { authenticate, authorize } from "../../middlewares/index.js";
 const userController =Router();
 
 userController.get('/profile',authenticate,async(req, res, next)=>{
@@ -10,9 +10,9 @@ res.json(data);
 
 })
 
-userController.patch('/update/:id', async(req ,res)=>{
+userController.put('/update',authenticate ,async(req ,res)=>{
 
-const user=await userServer.updateProfileService(req.params.id, req.body);
+const user=await userServer.updateProfileService(req.user, req.body);
  res.status(201).json({userData:user});
 })
  userController.delete("/:id", async(req, res, next)=>{
@@ -21,4 +21,12 @@ const user=await userServer.updateProfileService(req.params.id, req.body);
    res.status(200).json({userData});
 
  })
+  userController.get('/listall',authenticate,authorize,async(req, res, next)=>{
+
+  const users= await userServer.getAllUsers();
+   res.status(200).json(users)
+
+  })
+
+  
 export default userController;
