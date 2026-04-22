@@ -1,5 +1,5 @@
 import mongoose from "mongoose";
-import { User_Roles , GENDER, STATUS } from "../../Common/constants.js"
+import { User_Roles , GENDER, STATUS ,PROVIDERS} from "../../Common/constants.js"
 const userSchema = new mongoose.Schema({
 
     firstName:{
@@ -46,6 +46,20 @@ const userSchema = new mongoose.Schema({
     phoneNumber:{
         type:String,
     },
+    googleSub:{
+        type:String, 
+        index:{
+            name:'idx_googleSub_unique',
+            unique:true
+        }
+
+     },
+    provider:{
+        type:String,
+        enum:Object.values(PROVIDERS),
+        default:PROVIDERS.SYSTEM
+    },
+
     isDeleted: {
     type: Boolean,
     default: false

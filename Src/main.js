@@ -5,15 +5,22 @@ import dbConnection from './DB/db.connection.js';
 import globalErrorHandler from "./middlewares/globelErrorHandler.js"
 import * as controllers from './modules/index.js'
 import { encrypt } from './Common/Security/encryption.js';
+import { coreOptions } from './config/cors.config.js';
+ import cors from 'cors'
  const app= express();
  const port= envConfig.app.PORT ;
+
+
+ //cors middleware 
+
+ app.use(cors(coreOptions))
  app.use(express.json())
  //DataBase Connection 
  dbConnection()
 //Controllers
 const encryptData= encrypt("hi");
 console.log(encryptData)
-app.use('/auth',controllers.authController);
+app.use('/api/auth',controllers.authController);
 app.use('/user', controllers.userController);
 app.use('/message',controllers.messageController);
 
