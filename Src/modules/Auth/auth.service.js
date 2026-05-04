@@ -6,7 +6,7 @@ import User from "../../DB/models/user.model.js";
 import {OAuth2Client} from 'google-auth-library';
 import crypto from 'node:crypto'
 import {hash} from '../../Common/index.js';
-import { use } from "react";
+
 
 
   const client = new OAuth2Client();
@@ -18,7 +18,7 @@ import { use } from "react";
   const checkEmailDuplicate = await UserRepository.findOneDocument({ email , provider:securityIndex.PROVIDERS.SYSTEM});
 
   if (checkEmailDuplicate) {
-    throw new Error("email duplicat error", { cause: { status: 409 } })
+    throw new  securityIndex.ConflictException("email duplicat error",{dublicateEmail:email})
   }
   const hashedPassword = await securityIndex.hash(password, 12);
   const userObject = { firstName, lastName, email, password: hashedPassword, gender, role };
@@ -183,6 +183,4 @@ export const gmailRegisterService= async(body)=>{
 const userData= await handelUserUpdateOrCreation({user, payLoad});
 
 return  buildToken(userData)
-
- 
 }
