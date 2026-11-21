@@ -1,11 +1,12 @@
 import Joi from "joi";
+import { isValidObjectId } from "mongoose";
 const objectId = (value, helper) => {
   return isValidObjectId(value) ? value : helper.message("enter a valid ID");
 };
 export const generalValidators = {
   _id: Joi.custom(objectId),
   email: Joi.string()
-    .email({ tlds: { allow: ["com", "org"] }, multiple: true })
+    .email({ tlds: { allow: ["com", "org"] } })
     .messages({
       "string.email":
         "Email must end with .com or .org , example : exampleemail@gmail.com , exapleemail@any.org ",
