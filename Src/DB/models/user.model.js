@@ -1,86 +1,93 @@
 import mongoose from "mongoose";
-import { User_Roles , GENDER, STATUS ,PROVIDERS} from "../../Common/constants.js"
-const userSchema = new mongoose.Schema({
-
-    firstName:{
-        type:String,
-        required:true,
-        trim:true,
-        minLength:[3,'first name must be at least 3 characters long'],
-        maxLength:[50, 'first name must be less than 50 character long']
+import {
+  User_Roles,
+  GENDER,
+  STATUS,
+  PROVIDERS,
+} from "../../Common/constants.js";
+const userSchema = new mongoose.Schema(
+  {
+    firstName: {
+      type: String,
+      required: true,
+      trim: true,
+      minLength: [3, "first name must be at least 3 characters long"],
+      maxLength: [50, "first name must be less than 50 character long"],
     },
-    lastName:{
-        type:String,
-        required:true,
-        trim:true,
-        minLength:[3,"last name must be at least 3 character long"],
-        maxLength:[50,"last name must be less than 50 character long"]
+    lastName: {
+      type: String,
+      required: true,
+      trim: true,
+      minLength: [3, "last name must be at least 3 character long"],
+      maxLength: [50, "last name must be less than 50 character long"],
     },
-    email:{
-          type:String,
-        required:true,
+    email: {
+      type: String,
+      required: true,
     },
-    password:{
-        type:String,
-        required:true,
-        index:{
-            name:"email_unique",
-            unique:true
-
-        }
+    password: {
+      type: String,
+      required: true,
+      select: false,
+      index: {
+        name: "email_unique",
+        unique: true,
+      },
     },
-    role:{
-         type:String,
-       enum:Object.values(User_Roles),
-       default:User_Roles.USER
+    role: {
+      type: String,
+      enum: Object.values(User_Roles),
+      default: User_Roles.USER,
     },
-    gender:{
-        type:String,
-        enum:Object.values(GENDER)
+    gender: {
+      type: String,
+      enum: Object.values(GENDER),
     },
-    status:{
-         type:String,
-        enum:Object.values(STATUS),
-        default:STATUS.ACTIVE
+    status: {
+      type: String,
+      enum: Object.values(STATUS),
+      default: STATUS.ACTIVE,
     },
-    phoneNumber:{
-        type:String,
+    phoneNumber: {
+      type: String,
     },
-    googleSub:{
-        type:String, 
-        index:{
-            name:'idx_googleSub_unique',
-            unique:true
-        }
-
-     },
-    provider:{
-        type:String,
-        enum:Object.values(PROVIDERS),
-        default:PROVIDERS.SYSTEM
+    confirmEmail: {
+      type: Boolean,
+      default: false,
+    },
+    googleSub: {
+      type: String,
+      index: {
+        name: "idx_googleSub_unique",
+        unique: true,
+      },
+    },
+    provider: {
+      type: String,
+      enum: Object.values(PROVIDERS),
+      default: PROVIDERS.SYSTEM,
     },
 
     isDeleted: {
-    type: Boolean,
-    default: false
-  },
-    createdAt:{
-        type:Date,
-    
+      type: Boolean,
+      default: false,
     },
-    updatedAt:{
-        type:Date,
-        
-    }
-},{
-    toJSON:{virtuals:true,getters:true},
-    toObject:{getters:true},
-    timestamps:true
-
-})
-userSchema.virtual('fullName').get(function(){
-    return this.firstName +' '+ this.lastName
-})
+    createdAt: {
+      type: Date,
+    },
+    updatedAt: {
+      type: Date,
+    },
+  },
+  {
+    toJSON: { virtuals: true, getters: true },
+    toObject: { getters: true },
+    timestamps: true,
+  },
+);
+userSchema.virtual("fullName").get(function () {
+  return this.firstName + " " + this.lastName;
+});
 // safty check for model
- const User= mongoose.models.User|| mongoose.model('User',userSchema)
- export default User;
+const User = mongoose.models.User || mongoose.model("User", userSchema);
+export default User;

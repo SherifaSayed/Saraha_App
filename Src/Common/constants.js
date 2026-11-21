@@ -22,3 +22,9 @@ GOOGLEL:'google',
 SYSTEM:'system'
  
 }
+
+export const fileExtensions ={
+    Image:['jpg', 'jpeg', 'png', 'gif'],
+    Video:['mp4', 'avi', 'mkv','mov'],
+   Application:['pdf', 'doc', 'docx']
+}
