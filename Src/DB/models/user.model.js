@@ -78,6 +78,11 @@ const userSchema = new mongoose.Schema(
     updatedAt: {
       type: Date,
     },
+    confirmPassword: {
+      type: String,
+      required: true,
+      select: false,
+    },
   },
   {
     toJSON: { virtuals: true, getters: true },
