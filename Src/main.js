@@ -5,6 +5,7 @@ import { coreOptions } from "./config/cors.config.js";
 import dbConnection from "./DB/db.connection.js";
 import globalErrorHandler from "./middlewares/globelErrorHandler.js";
 import * as controllers from "./modules/index.js";
+import { redisConnection } from "./Common/Clients/redis.client.js";
 
 const app = express();
 const port = envConfig.app.PORT;
@@ -13,7 +14,7 @@ app.use(cors(coreOptions));
 app.use(express.json());
 
 dbConnection();
-
+await redisConnection();
 app.use("/api/auth", controllers.authController);
 app.use("/user", controllers.userController);
 app.use("/message", controllers.messageController);

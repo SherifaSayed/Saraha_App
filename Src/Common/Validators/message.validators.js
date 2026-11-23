@@ -1,5 +1,5 @@
 import Joi from "joi";
-import { generalValidators } from "../Common/Validators/general.validator.js";
+import { generalValidators } from "./general.validator.js";
 
 export const sendMessageSchema = {
   body: Joi.object({

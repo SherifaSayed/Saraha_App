@@ -8,7 +8,7 @@ import {
 import {
   updateProfileSchema,
   userIdSchema,
-} from "../../validators/user.validators.js";
+} from "../../Common/Validators/user.validators.js";
 
 const userController = Router();
 

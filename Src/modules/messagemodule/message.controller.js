@@ -8,7 +8,7 @@ import {
 import {
   sendMessageSchema,
   messageIdSchema,
-} from "../../validators/message.validators.js";
+} from "../../Common/Validators/message.validators.js";
 
 const messageController = Router();
 

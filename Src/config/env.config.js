@@ -34,6 +34,7 @@ const envConfig = {
   gcp: {
     webCLintID: process.env.GCP_CLIENT_ID,
   },
+  redis: { url: process.env.REDIS_URL },
 };
 
 export default envConfig;

@@ -1,6 +1,6 @@
 import Joi from "joi";
-import { GENDER } from "../Common/constants.js";
-import { generalValidators } from "../Common/Validators/general.validator.js";
+import { GENDER } from "../constants.js";
+import { generalValidators } from "../Validators/general.validator.js";
 
 export const updateProfileSchema = {
   body: Joi.object({
