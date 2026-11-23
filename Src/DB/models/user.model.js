@@ -24,15 +24,15 @@ const userSchema = new mongoose.Schema(
     email: {
       type: String,
       required: true,
+      index: {
+        name: "email_unique",
+        unique: true,
+      },
     },
     password: {
       type: String,
       required: true,
       select: false,
-      index: {
-        name: "email_unique",
-        unique: true,
-      },
     },
     role: {
       type: String,
@@ -72,12 +72,7 @@ const userSchema = new mongoose.Schema(
       type: Boolean,
       default: false,
     },
-    createdAt: {
-      type: Date,
-    },
-    updatedAt: {
-      type: Date,
-    },
+
     confirmPassword: {
       type: String,
       required: true,

@@ -1,18 +1,53 @@
 import { Router } from "express";
-import * as messageService from "./message.service.js"
-const messageController =Router();
+import * as messageService from "./message.service.js";
+import {
+  authenticate,
+  validation,
+  responseFormatter,
+} from "../../middlewares/index.js";
+import {
+  sendMessageSchema,
+  messageIdSchema,
+} from "../../validators/message.validators.js";
 
-messageController.post('/send',async(req,res)=>{
+const messageController = Router();
 
-const result = await messageService.sendMessage(req.body);
-res.status(201).json({result})
+messageController.post(
+  "/send",
+  validation(sendMessageSchema),
+  responseFormatter(async (req) => {
+    const data = await messageService.sendMessage(req.body);
+    return { message: "Message sent", data, meta: { statusCode: 201 } };
+  }),
+);
 
-})
-messageController.get('/list/:id',async(req ,res , next)=>{
+messageController.get(
+  "/",
+  authenticate,
+  responseFormatter(async (req) => {
+    const data = await messageService.getMyMessages(req.user);
+    return { message: "Messages fetched", data, meta: { statusCode: 200 } };
+  }),
+);
 
-const result= await messageService.userMessages(req.params.id);
-res.status(200).json(result);
+messageController.get(
+  "/:id",
+  authenticate,
+  validation(messageIdSchema),
+  responseFormatter(async (req) => {
+    const data = await messageService.getMessageById(req.user, req.params.id);
+    return { message: "Message fetched", data, meta: { statusCode: 200 } };
+  }),
+);
 
-})
+messageController.delete(
+  "/:id",
+  authenticate,
+  validation(messageIdSchema),
+  responseFormatter(async (req) => {
+    const data = await messageService.deleteMessage(req.user, req.params.id);
+    return { message: "Message deleted", data, meta: { statusCode: 200 } };
+  }),
+);
 
 export default messageController;

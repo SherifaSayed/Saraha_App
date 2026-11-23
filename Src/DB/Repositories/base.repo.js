@@ -14,6 +14,7 @@ export class BaseRepository {
   findDocumentById(id) {
     return this.model.findById(id);
   }
+
   findDocument(filters = {}, select = {}) {
     return this.model.find(filters).select(select);
   }
@@ -60,7 +61,7 @@ export class BaseRepository {
     return this.model.deleteMany({});
   }
 
-  countDocuments(filters = {}) {
+  contDocuments(filters) {
     return this.model.countDocuments(filters);
   }
 }

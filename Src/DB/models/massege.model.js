@@ -5,28 +5,20 @@ const MessageSchema = new mongoose.Schema(
     content: {
       type: String,
       required: true,
+      trim: true,
+      minLength: 1,
+      maxLength: 1000,
     },
     receiverId: {
       type: mongoose.Schema.Types.ObjectId,
       ref: "User",
       required: true,
-      index: {
-        name: "idx_receiverId",
-      },
-    },
-    senderId: {
-      type: mongoose.Schema.Types.ObjectId,
-      ref: "User",
-      index: {
-        name: "idx_senderId",
-      },
+      index: { name: "idx_receiverId" },
     },
   },
-  {
-    timestamps: true,
-  },
+  { timestamps: true },
 );
 
 const Message =
-  mongoose.model.Message || mongoose.model("Message", MessageSchema);
+  mongoose.models.Message || mongoose.model("Message", MessageSchema);
 export default Message;
